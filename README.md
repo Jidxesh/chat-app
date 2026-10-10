@@ -1,6 +1,6 @@
 # Chat App
 
-A WhatsApp-style chat app with real-time messaging, group chats, media sharing and 1:1 voice/video calls.
+A chat app with real-time messaging, group chats, media sharing and 1:1 voice/video calls.
 
 **Live demo: https://jidxesh-chat.onrender.com**
 
