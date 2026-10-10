@@ -1,0 +1,35 @@
+# Render Blueprint: deploys the API and the React frontend from this one repo.
+# Render dashboard → New → Blueprint → pick this repo. You'll be asked for MONGO_URI.
+services:
+  - type: web
+    name: jidxesh-chat-api # → https://jidxesh-chat-api.onrender.com
+    runtime: node
+    plan: free
+    region: singapore # closest Render region to India; put the Atlas cluster nearby too
+    rootDir: backend
+    buildCommand: npm ci
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: MONGO_URI # MongoDB Atlas connection string, entered in the Render dashboard
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_EXPIRES_IN
+        value: 7d
+      - key: CLIENT_URL
+        value: https://jidxesh-chat.onrender.com
+
+  - type: web
+    name: jidxesh-chat # → https://jidxesh-chat.onrender.com
+    runtime: static
+    rootDir: frontend
+    buildCommand: npm ci && npm run build
+    staticPublishPath: dist
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: VITE_API_URL
+        value: https://jidxesh-chat-api.onrender.com
